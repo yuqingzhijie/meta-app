@@ -104,6 +104,7 @@ function onRefresh() {
   leftPassageList.value = [];
   rightPassageList.value = [];
   finished.value = false;
+  refreshing.value = false;
   onLoad(pageIndex, pageSize);
 }
 
