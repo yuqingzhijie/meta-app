@@ -79,7 +79,8 @@ async function onLoad(pageIndex: number, pageSize: number) {
     pageIndex: String(pageIndex),
     pageSize: String(pageSize)
   }).toString();
-  const url = `http://rap2api.taobao.org/app/mock/323529/get/passageList?${queryString}`;
+  // const url = `http://rap2api.taobao.org/app/mock/323529/get/passageList?${queryString}`;
+  const url = `https://m1.apifoxmock.com/m1/6394040-6090769-default/passageList?${queryString}`;
   const response = await fetch(url);
   const res = (await (response as any).json()) as PassageListResp;
   for (const raw of res.list) {
