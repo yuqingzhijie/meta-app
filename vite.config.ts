@@ -10,5 +10,9 @@ export default defineConfig({
     Components({
       resolvers: [VantResolver()]
     })
-  ]
+  ],
+  server: {
+    host: "0.0.0.0",
+    port: 5173
+  }
 });
