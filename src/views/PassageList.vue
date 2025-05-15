@@ -47,37 +47,39 @@ let pageIndex = 1;
 const pageSize = 10;
 
 const togglePlay = (id: string) => {
-  let item: Passage | null =
-    leftPassageList.value.find(child => child.id === id) ||
-    rightPassageList.value.find(child => child.id === id) ||
-    null;
-  if (item) {
-    if (item.isActive) {
-      item.isActive = false;
+  let passage: Passage | null = getPassage(id);
+  if (passage) {
+    if (passage.isActive) {
+      passage.isActive = false;
+      lastPlayedVideoId = "";
     } else {
-      item.isActive = true;
+      passage.isActive = true;
 
-      let lastItem: Passage | null =
-        leftPassageList.value.find(child => child.id === lastPlayedVideoId) ||
-        rightPassageList.value.find(child => child.id === lastPlayedVideoId) ||
-        null;
-
-      if (lastItem) {
-        lastItem.isActive = false;
+      let lastPassage: Passage | null = getPassage(lastPlayedVideoId);
+      if (lastPassage) {
+        lastPassage.isActive = false;
       }
       lastPlayedVideoId = id;
     }
   }
 };
 
-async function onLoad(pageIndex: number, pageSize: number) {
+const getPassage = (id: string) => {
+  return (
+    leftPassageList.value.find(child => child.id === id) ||
+    rightPassageList.value.find(child => child.id === id) ||
+    null
+  );
+};
+
+async function onLoad() {
   loading.value = true;
   // 定义每列宽度 rem 单位（可调整）
   const columnWidthRem = 11.25;
 
   const queryString = new URLSearchParams({
-    pageIndex: String(pageIndex),
-    pageSize: String(pageSize)
+    pageIndex: `${pageIndex++}`,
+    pageSize: `${pageSize}`
   }).toString();
   // const url = `http://rap2api.taobao.org/app/mock/323529/get/passageList?${queryString}`;
   const url = `https://m1.apifoxmock.com/m1/6394040-6090769-default/passageList?${queryString}`;
@@ -100,22 +102,22 @@ async function onLoad(pageIndex: number, pageSize: number) {
 }
 
 function onRefresh() {
-  pageIndex = 0;
+  pageIndex = 1;
   leftPassageList.value = [];
   rightPassageList.value = [];
   finished.value = false;
   refreshing.value = false;
-  onLoad(pageIndex, pageSize);
+  onLoad();
 }
 
 // 初始加载
-onLoad(pageIndex, pageSize);
+onLoad();
 </script>
 
 <style scoped lang="less">
 .waterfall-container {
   display: flex;
-  gap: 0.1875rem; /* 12px */
+  gap: 0.1875rem;
   padding: 0.375rem;
 }
 .column {
@@ -123,5 +125,9 @@ onLoad(pageIndex, pageSize);
   display: flex;
   flex-direction: column;
   gap: 0.1875rem;
+
+  // .passage {
+  //   width: 11.25rem;
+  // }
 }
 </style>

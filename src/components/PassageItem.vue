@@ -77,6 +77,7 @@ const togglePlay = () => {
     right: 0.5rem;
     color: white;
     font-size: 1.5rem;
+    pointer-events: none;
   }
 }
 .content {
@@ -91,6 +92,8 @@ const togglePlay = () => {
 .community {
   margin: 0 0 0.5rem;
   font-size: 0.75rem;
+  height: 1rem;
+  line-height: 1rem;
   color: #666;
 }
 .footer {
@@ -118,6 +121,6 @@ const togglePlay = () => {
   align-items: center;
 }
 .like-wrap span {
-  margin-left: 0.25rem;
+  margin-left: 0.125rem;
 }
 </style>
